@@ -16,7 +16,7 @@ class HidePostsPage extends StatefulWidget {
 }
 
 class _HidePostsPageState extends State<HidePostsPage> {
-  String content;
+  String content = "";
 
   /// 记录原始数据
   List<UserBean> users = [];
@@ -36,12 +36,16 @@ class _HidePostsPageState extends State<HidePostsPage> {
   void initState() {
     super.initState();
 
-    if (widget.type == "my") {
-      content = S.of(context).hide_my_posts_tip;
-    }
-    if (widget.type == "their") {
-      content = S.of(context).hide_their_posts_tip;
-    }
+    Future.delayed(Duration.zero, () {
+      setState(() {
+        if (widget.type == "my") {
+          content = S.of(context).hide_my_posts_tip;
+        }
+        if (widget.type == "their") {
+          content = S.of(context).hide_their_posts_tip;
+        }
+      });
+    });
 
     getUsersList();
   }
