@@ -1,0 +1,127 @@
+name: flutter_chat
+description: A new Flutter application.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter_localizations:
+    sdk: flutter
+  flutter:
+    sdk: flutter
+
+  # 高德地图 定位 组件
+  amap_location_fluttify: ^0.13.0
+  # 高德地图 地图 组件
+  amap_map_fluttify: ^0.23.1
+  # 高德地图 搜索 组件
+  amap_search_fluttify: ^0.10.0
+  # 排序
+  azlistview: ^0.1.2
+  # 缓存图片
+  cached_network_image: ^2.2.0+1
+  # 网络连接/配置
+  connectivity: 0.4.8+6
+  # 网络请求
+  dio: ^3.0.9
+  # emoji
+  emoji_picker: ^0.1.0
+  # 选择文件
+  file_picker: ^1.11.0+3
+  # 下拉刷新，上拉加载
+  flutter_easyrefresh: ^2.1.1
+  # 
+  flutter_linkify: ^3.1.3
+  # 音频录制、播放
+  flutter_sound_lite: ^4.0.6
+  # SVG
+  flutter_svg: ^0.17.4
+  # 图片裁剪
+  image_cropper: ^1.2.3
+  # 本地图片、视频选择
+  image_picker: ^0.6.7+2
+  # 极光IM
+  jmessage_flutter: ^0.6.3
+  # 拼音
+  lpinyin: ^1.0.9
+  # MOB短信验证码
+  mobsms:
+  # 打开文件
+  open_file: ^3.0.1
+  # 图片展示
+  photo_view: ^0.9.2
+  # 状态管理
+  provider: ^4.1.3
+  # 二维码扫描
+  qr_code_scanner: ^0.0.13
+  # SP
+  shared_preferences: ^0.5.7+3
+  # 
+  sliding_up_panel: ^1.0.2
+  #
+  url_launcher: ^5.4.10
+  # webview
+  webview_flutter: ^0.3.22+1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_launcher_icons: ^0.7.5
+
+
+flutter_icons:
+  android: "ic_launcher"
+  ios: true
+  image_path: "images/Icon-logo.png"
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - images/
+    - assets/data/
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: IconFont
+      fonts:
+        - asset: assets/fonts/iconfont.ttf
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
