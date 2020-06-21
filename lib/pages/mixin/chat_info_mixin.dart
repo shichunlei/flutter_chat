@@ -88,6 +88,7 @@ mixin ChatInfoStateMixin<T extends StatefulWidget> on State<T> {
   void updateGroupName(name) async {
     showLoadingDialog(context);
 
+    /// todo updateGroupInfo 这个方法实际上没有做更新操作，方法存在问题
     groupInfo.updateGroupInfo(newName: name).then((value) {
       getGroupInfo();
       Navigator.pop(context);

@@ -65,7 +65,6 @@ class NameCardMessageView extends StatelessWidget {
                                   style: TextStyle(color: Colors.white)))
                         ], mainAxisSize: MainAxisSize.min))),
                 onTap: () {
-                  /// TODO 跳转到名片用户详情界面
                   pushNewPage(
                       context,
                       FriendInfoPage(

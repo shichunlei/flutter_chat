@@ -13,6 +13,7 @@ import '../../contacts/choice_contacts.dart';
 import '../../contacts/friend.dart';
 import '../../mixin/chat_info_mixin.dart';
 
+import 'manage.dart';
 import 'members.dart';
 
 class GroupChatInfoPage extends StatefulWidget {
@@ -126,7 +127,6 @@ class _GroupChatInfoPageState extends State<GroupChatInfoPage>
                           showNickName: showNickName,
                           member: list[index],
                           onTap: () {
-                            /// todo 进入好友详情页面
                             pushNewPage(
                                 context,
                                 FriendInfoPage(
@@ -148,7 +148,7 @@ class _GroupChatInfoPageState extends State<GroupChatInfoPage>
                       if (Utils.isNotEmpty(value)) updateGroupName(value);
                     }),
                 margin: EdgeInsets.only(left: 20, right: 5)),
-            Container(height: 0.5),
+            SizedBox(height: 0.5),
             SelectedText(
                 rightWidget: ImageView('images/icon_qr.png',
                     imageType: ImageType.assets, width: 20, height: 20),
@@ -156,34 +156,36 @@ class _GroupChatInfoPageState extends State<GroupChatInfoPage>
                 onTap: () => showQRNameCardDialog(context, '',
                     title: S.of(context).group_qr),
                 margin: EdgeInsets.only(left: 20, right: 5)),
-            Container(height: 0.5),
+            SizedBox(height: 0.5),
             SelectedText(
                 title: S.of(context).group_notice,
                 onTap: () {},
                 margin: EdgeInsets.only(left: 20, right: 5)),
-            Container(height: 0.5),
+            SizedBox(height: 0.5),
             SelectedText(
                 title: S.of(context).remark,
                 onTap: () {},
                 margin: EdgeInsets.only(left: 20, right: 5)),
-            Container(height: 0.5),
+            SizedBox(height: 0.5),
             Visibility(
                 visible: isAdmin || isOwner,
                 child: SelectedText(
                     title: S.of(context).group_manager,
-                    onTap: () {},
+                    onTap: () => pushNewPage(
+                        context,
+                        GroupManagePage(
+                            isOwner: isOwner, groupId: groupInfo.id)),
                     margin: EdgeInsets.only(left: 20, right: 5))),
-            Container(height: 5),
+            SizedBox(height: 5),
             SwitchTitleView(
                 padding: EdgeInsets.only(left: 20, right: 5),
                 title: S.of(context).mute_notifications,
                 onChanged: (bool value) {
-                  /// todo 设置这个消息免打扰
                   Provider.of<ChatProvider>(context, listen: false)
                       .setDisturb(widget.chat, value);
                 },
                 isChecked: isNoDisturb),
-            Container(height: 0.5),
+            SizedBox(height: 0.5),
             SwitchTitleView(
                 padding: EdgeInsets.only(left: 20, right: 5),
                 title: S.of(context).top_chat,
@@ -193,13 +195,13 @@ class _GroupChatInfoPageState extends State<GroupChatInfoPage>
                       .setTopMessage(widget.chat, value);
                 },
                 isChecked: isTop),
-            Container(height: 0.5),
+            SizedBox(height: 0.5),
             SwitchTitleView(
                 padding: EdgeInsets.only(left: 20, right: 5),
                 title: S.of(context).save_to_contacts,
                 onChanged: (bool value) {},
                 isChecked: false),
-            Container(height: 5),
+            SizedBox(height: 5),
             SelectedText(
                 title: S.of(context).my_alias_in_group,
                 content: groupNickname,
@@ -213,19 +215,19 @@ class _GroupChatInfoPageState extends State<GroupChatInfoPage>
                       if (Utils.isNotEmpty(value)) setGroupNickname(value);
                     }),
                 margin: EdgeInsets.only(left: 20, right: 5)),
-            Container(height: 0.5),
+            SizedBox(height: 0.5),
             SwitchTitleView(
                 padding: EdgeInsets.only(left: 20, right: 5),
                 title: S.of(context).on_screen_names,
                 onChanged: (bool value) => setState(() => showNickName = value),
                 isChecked: false),
-            Container(height: 5),
+            SizedBox(height: 5),
             SelectedText(
                 title: S.of(context).set_background,
                 onTap: () =>
                     pushNewPage(context, WallpaperPage(chat: widget.chat)),
                 margin: EdgeInsets.only(left: 20, right: 5)),
-            Container(height: 5),
+            SizedBox(height: 5),
             SelectedText(
                 title: S.of(context).clear_messages,
                 onTap: () {

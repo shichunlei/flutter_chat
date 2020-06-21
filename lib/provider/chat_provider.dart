@@ -57,16 +57,10 @@ class ChatProvider extends ChangeNotifier {
     });
   }
 
-  Future getCurrentConversationInfo(JMConversationInfo conversation) async {
-    _chats.forEach((element) {
-      print(element.toJson());
-      if (element.target == conversation.target) {
-        _bgImage = element.extras["bgImage"] ?? '';
+  Future getCurrentChatBgImage(JMConversationInfo conversation) async {
+    _bgImage = conversation.extras["bgImage"] ?? '';
 
-        print('当前聊天的背景图片 => $_bgImage');
-      }
-    });
-
+    print('当前聊天的背景图片 => $_bgImage');
     notifyListeners();
   }
 
@@ -79,11 +73,12 @@ class ChatProvider extends ChangeNotifier {
     _chats.forEach((element) {
       print("会话-----============> ${element.toJson()}");
       if (element.target == chat.target) {
-        Map<dynamic, dynamic> extras = chat.extras;
+        Map<dynamic, dynamic> extras = element.extras;
 
         extras["isTop"] = isTop ? "1" : "0";
 
-        chat.setExtras(extras);
+        /// todo setExtras 这个方法有问题
+        element.setExtras(extras);
       }
     });
 
@@ -123,16 +118,12 @@ class ChatProvider extends ChangeNotifier {
   /// [bgImage] 背景图片
   ///
   Future setChatBackground(JMConversationInfo chat, String bgImage) async {
-    _chats.forEach((element) {
-      print(element.toJson());
-      if (element.target == chat.target) {
-        Map<dynamic, dynamic> extras = chat.extras;
+    Map<dynamic, dynamic> extras = chat.extras;
 
-        extras["bgImage"] = bgImage;
+    extras["bgImage"] = bgImage;
 
-        chat.setExtras(extras);
-      }
-    });
+    /// todo setExtras 这个方法有问题
+    chat.setExtras(extras);
 
     _bgImage = bgImage;
 

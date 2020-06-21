@@ -94,7 +94,7 @@ class _ChatsPageState extends State<ChatsPage>
                                 }),
                             chat: provider.chats[index],
                             onPress: () {
-                              provider.getCurrentConversationInfo(
+                              provider.getCurrentChatBgImage(
                                   provider.chats[index]);
 
                               provider

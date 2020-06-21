@@ -10,6 +10,8 @@ import '../../provider/index.dart';
 
 import 'package:flutter/material.dart';
 
+import '../photo_view.dart';
+
 class FriendInfoPage extends StatefulWidget {
   final String identifier;
 
@@ -116,15 +118,19 @@ class _FriendInfoPageState extends State<FriendInfoPage> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(children: <Widget>[
                   GestureDetector(
-                      child: ImageView(avatarPath,
-                          height: 60,
-                          width: 60,
-                          radius: 10.0,
-                          margin: EdgeInsets.only(right: 10),
-                          placeholder: 'images/header.jpeg'),
-                      onTap: () {
-                        /// todo
-                      }),
+                      child: Hero(
+                          tag: "header",
+                          child: ImageView(avatarPath,
+                              height: 60,
+                              width: 60,
+                              radius: 10.0,
+                              margin: EdgeInsets.only(right: 10),
+                              placeholder: 'images/header.jpeg')),
+                      onTap: () => pushNewPage(
+                          context,
+                          PhotoViewPage(
+                              photos: <String>[avatarPath],
+                              heroTag: "header"))),
                   Expanded(
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,

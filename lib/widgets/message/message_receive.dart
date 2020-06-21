@@ -102,7 +102,7 @@ class _MessageReceiveViewState extends State<MessageReceiveView>
                     showDeleteMessageDialog(context, callBack: (confirm) {
                       if (confirm) {
                         print('messageId======> ${widget.message.id}');
-                        // todo 删除消息
+                        // todo 删除消息,好像是不能删除对方发送的消息，这儿不知是不是插件的问题
                         Provider.of<ChatProvider>(context, listen: false)
                             .deleteMessageById(widget.message);
                       }

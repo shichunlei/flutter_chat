@@ -88,7 +88,9 @@ class JPushUtil {
         return false;
       } else {
         print("================>${conversationInfo.extras["isTop"]}");
-        if (conversationInfo.extras["isTop"] == "\"1\"") {
+
+        if (conversationInfo.extras["isTop"] == "\"1\"" ||
+            conversationInfo.extras["isTop"] == "1") {
           return true;
         } else {
           return false;

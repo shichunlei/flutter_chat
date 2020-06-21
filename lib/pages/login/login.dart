@@ -29,7 +29,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Stack(children: <Widget>[
         Positioned.fill(
-            child: Image.asset('images/splash.png', fit: BoxFit.fitHeight)),
+            child: Image.asset('images/splash.jpg', fit: BoxFit.fitHeight)),
         Positioned(
             child: Row(children: <Widget>[
               Expanded(

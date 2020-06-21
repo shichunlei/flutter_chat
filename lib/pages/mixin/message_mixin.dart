@@ -115,7 +115,6 @@ mixin MessageStateMixin<T extends StatefulWidget> on State<T> {
       print('----------------------> ${toUserInfo.username}');
       if ((retractedMessage.from as JMUserInfo).username ==
           toUserInfo.username) {
-        /// todo
         Future.delayed(Duration.zero, () {
           Provider.of<ChatProvider>(context, listen: false)
               .retractedMessage(messageId);
@@ -126,7 +125,6 @@ mixin MessageStateMixin<T extends StatefulWidget> on State<T> {
       print('----------------------> ${groupInfo.id}');
 
       if ((retractedMessage.target as JMGroupInfo).id == groupInfo.id) {
-        /// todo
         Future.delayed(Duration.zero, () {
           Provider.of<ChatProvider>(context, listen: false)
               .retractedMessage(messageId);

@@ -51,7 +51,6 @@ class _SingleChatInfoPageState extends State<SingleChatInfoPage>
                           margin: EdgeInsets.only(right: 10),
                           placeholder: 'images/header.jpeg'),
                       onTap: () {
-                        /// todo 进入好友详情页面
                         pushNewPage(
                             context,
                             FriendInfoPage(
@@ -68,7 +67,6 @@ class _SingleChatInfoPageState extends State<SingleChatInfoPage>
             SwitchTitleView(
                 title: S.of(context).mute_notifications,
                 onChanged: (bool value) {
-                  /// todo 设置这个消息免打扰
                   Provider.of<ChatProvider>(context, listen: false)
                       .setDisturb(widget.chat, value);
                 },

@@ -62,7 +62,7 @@ class MessageSendView extends StatelessWidget {
               } else if (actions[value] == Config.RECALL) {
                 showRecallMessageDialog(context, callBack: (confirm) {
                   if (confirm) {
-                    /// todo 撤回消息
+                    /// todo 撤回消息，这儿有个时间限制，大于两分钟的消息不能撤回，暂时没有做判断
                     Provider.of<ChatProvider>(context, listen: false)
                         .retractMessage(message);
                   }
@@ -71,8 +71,6 @@ class MessageSendView extends StatelessWidget {
               } else if (actions[value] == Config.REMOVE) {
                 showDeleteMessageDialog(context, callBack: (confirm) {
                   if (confirm) {
-                    print('messageId======> ${message.id}');
-                    // todo 删除消息
                     Provider.of<ChatProvider>(context, listen: false)
                         .deleteMessageById(message);
                   }

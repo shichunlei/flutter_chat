@@ -28,15 +28,7 @@ class ImageMessageView extends StatelessWidget {
                 borderRadius: borderRadius(type),
                 child: Hero(
                     tag: message?.id,
-                    child: Utils.verifyPathIsHttp(message?.thumbPath)
-                        ? CachedNetworkImage(
-                            placeholder: (context, url) =>
-                                Image.asset('images/img_not_available.jpeg'),
-                            imageUrl: '${message?.thumbPath}',
-                            fit: BoxFit.cover,
-                            errorWidget: (context, url, error) =>
-                                Image.asset('images/img_not_available.jpeg'))
-                        : Image.file(File('${message?.thumbPath}'))))),
+                    child: Image.file(File('${message?.thumbPath}'))))),
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
           pushNewPage(
