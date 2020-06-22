@@ -283,13 +283,12 @@ class ChatProvider extends ChangeNotifier {
       print('getHistoryMessages length => ${value.length}');
 
       value.forEach((element) {
-        print("getHistoryMessages => ${(element.from as JMUserInfo).toJson()}");
-
-        if (element is JMTextMessage) {
-          print('getHistoryMessages     =>      ${element.text}');
-        }
         if (element is JMNormalMessage) {
-          print('getHistoryMessages     =>      ${element.id}');
+          print('getHistoryMessages     =>      ${element.toJson()}');
+        }
+
+        if (element is JMEventMessage) {
+          print('getHistoryMessages     =>      ${element.eventType}');
         }
       });
 

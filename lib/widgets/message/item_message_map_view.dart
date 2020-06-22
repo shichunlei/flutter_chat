@@ -53,7 +53,8 @@ class _MapMessageViewState extends State<MapMessageView>
                             child: Stack(children: <Widget>[
                               AmapView(
                                   centerCoordinate: position.poi.latLng,
-                                  showZoomControl: false),
+                                  showZoomControl: false,
+                                  zoomLevel: 15),
                               Center(
                                   child: Padding(
                                       padding:

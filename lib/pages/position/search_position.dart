@@ -59,6 +59,7 @@ class _SearchPositionPageState extends State<SearchPositionPage>
   void dispose() {
     textEditingController?.dispose();
     _jumpController?.dispose();
+    _amapController?.dispose();
     super.dispose();
   }
 

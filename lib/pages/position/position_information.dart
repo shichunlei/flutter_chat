@@ -1,5 +1,7 @@
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
 
+import 'package:permission_handler/permission_handler.dart';
+
 import '../../model/position.dart';
 import '../../generated/i18n.dart';
 
@@ -15,6 +17,8 @@ class PositionInformationPage extends StatefulWidget {
 }
 
 class _PositionInformationPageState extends State<PositionInformationPage> {
+  AmapController _controller;
+
   @override
   void initState() {
     super.initState();
@@ -22,6 +26,7 @@ class _PositionInformationPageState extends State<PositionInformationPage> {
 
   @override
   void dispose() {
+    _controller?.dispose();
     super.dispose();
   }
 
@@ -33,7 +38,36 @@ class _PositionInformationPageState extends State<PositionInformationPage> {
             centerTitle: true,
             title: Text(widget.location == null
                 ? S.of(context).title_position_info
-                : widget.location.poi.address)),
-        body: AmapView(centerCoordinate: widget.location.poi.latLng));
+                : widget.location.poi.title)),
+        body: AmapView(
+            onMapCreated: (controller) async {
+              _controller = controller;
+
+              if (await Permission.location.request().isGranted) {
+                await _controller.showMyLocation(MyLocationOption());
+
+                await _controller.addMarker(MarkerOption(
+                    latLng: widget.location.poi.latLng,
+                    iconUri: Uri.parse('images/icon_location.png'),
+                    imageConfig: createLocalImageConfiguration(context),
+                    title: widget.location.poi.title,
+                    snippet: '描述'));
+              } else {
+                print('没有权限');
+              }
+            },
+            zoomLevel: 18,
+
+            /// 开始移动
+            onMapMoveStart: (MapMove move) async {
+              print(
+                  '开始移动:lat: ${move.latLng.latitude}, lng: ${move.latLng.longitude}');
+            },
+
+            /// 移动结束
+            onMapMoveEnd: (MapMove move) async {
+              print(
+                  '结束移动:lat: ${move.latLng.latitude}, lng: ${move.latLng.longitude}');
+            }));
   }
 }

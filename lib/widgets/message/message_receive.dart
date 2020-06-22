@@ -59,7 +59,7 @@ class _MessageReceiveViewState extends State<MessageReceiveView>
     super.build(context);
 
     if (userInfo.username == "系统消息") {
-      return Container();
+      return SizedBox(height: 0);
     } else {
       return Column(children: <Widget>[
         /// 时间显示
