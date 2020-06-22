@@ -58,18 +58,21 @@ class _MessageReceiveViewState extends State<MessageReceiveView>
   Widget build(BuildContext context) {
     super.build(context);
 
-    return Column(children: <Widget>[
-      /// 时间显示
-      Visibility(
-          visible: widget.time != null,
-          child: Align(
-              child: Container(
-                  margin: EdgeInsets.only(bottom: 8.0),
-                  padding: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
-                  child: Text('${widget.time}'),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.all(Radius.circular(5)))))),
+    if (userInfo.username == "系统消息") {
+      return Container();
+    } else {
+      return Column(children: <Widget>[
+        /// 时间显示
+        Visibility(
+            visible: widget.time != null,
+            child: Align(
+                child: Container(
+                    margin: EdgeInsets.only(bottom: 8.0),
+                    padding: EdgeInsets.symmetric(vertical: 3, horizontal: 8),
+                    child: Text('${widget.time}'),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(5)))))),
 //      message.isRecall
 //          ? Align(
 //          child: Container(
@@ -77,10 +80,10 @@ class _MessageReceiveViewState extends State<MessageReceiveView>
 //              child: Text(S.of(context).withdrew_message(message.user.name),
 //                  style: TextStyle(color: Colors.grey[600])) //
 //          )):
-      Row(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
+        Row(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
 //            Visibility(
 //                child: InkWell(
 //                  onTap: () {
@@ -93,60 +96,62 @@ class _MessageReceiveViewState extends State<MessageReceiveView>
 //                          : Icon(Icons.panorama_fish_eye)),
 //                ),
 //                visible: provider.showChecked),
-            PopupMenu(
-                actions: actions,
-                onValueChanged: (int value) {
-                  if (actions[value] == Config.COPY) {
-                    Utils.copyToClipboard('${widget.message?.text}');
-                  } else if (actions[value] == Config.REMOVE) {
-                    showDeleteMessageDialog(context, callBack: (confirm) {
-                      if (confirm) {
-                        print('messageId======> ${widget.message.id}');
-                        // todo 删除消息,好像是不能删除对方发送的消息，这儿不知是不是插件的问题
-                        Provider.of<ChatProvider>(context, listen: false)
-                            .deleteMessageById(widget.message);
-                      }
-                      Navigator.maybePop(context);
-                    });
-                  } else if (actions[value] == Config.FORWARD) {
-                    /// TODO
-                  } else if (actions[value] == Config.QUOTE) {
-                    /// TODO
-                  } else if (actions[value] == Config.SELECT) {
-                    /// TODO
-                    /// provider.toggleSelectMessage(true);
-                  }
-                },
-                child: Container(
-                    margin: EdgeInsets.only(left: 10),
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          ShakeView(
-                              child: ImageView(userInfo.extras["avatarUrl"],
-                                  radius: 5,
-                                  height: 35,
-                                  width: 35,
-                                  placeholder: 'images/header.jpeg'),
-                              onTap: () => pushNewPage(
-                                  context,
-                                  FriendInfoPage(
-                                      identifier: userInfo.username)),
-                              doubleTapCallback: (bool value) {
-                                if (value) {
-                                  print("双击回调");
+              PopupMenu(
+                  actions: actions,
+                  onValueChanged: (int value) {
+                    if (actions[value] == Config.COPY) {
+                      Utils.copyToClipboard('${widget.message?.text}');
+                    } else if (actions[value] == Config.REMOVE) {
+                      showDeleteMessageDialog(context, callBack: (confirm) {
+                        if (confirm) {
+                          print('messageId======> ${widget.message.id}');
+                          // todo 删除消息,好像是不能删除对方发送的消息，这儿不知是不是插件的问题
+                          Provider.of<ChatProvider>(context, listen: false)
+                              .deleteMessageById(widget.message);
+                        }
+                        Navigator.maybePop(context);
+                      });
+                    } else if (actions[value] == Config.FORWARD) {
+                      /// TODO
+                    } else if (actions[value] == Config.QUOTE) {
+                      /// TODO
+                    } else if (actions[value] == Config.SELECT) {
+                      /// TODO
+                      /// provider.toggleSelectMessage(true);
+                    }
+                  },
+                  child: Container(
+                      margin: EdgeInsets.only(left: 10),
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            ShakeView(
+                                child: ImageView(
+                                    userInfo.extras["avatarUrl"] ?? "",
+                                    radius: 5,
+                                    height: 35,
+                                    width: 35,
+                                    placeholder: 'images/header.jpeg'),
+                                onTap: () => pushNewPage(
+                                    context,
+                                    FriendInfoPage(
+                                        identifier: userInfo.username)),
+                                doubleTapCallback: (bool value) {
+                                  if (value) {
+                                    print("双击回调");
 //                                  Provider.of<ChatProvider>(context,
 //                                          listen: false)
 //                                      .sendShakeMessage(widget.chat, userInfo);
-                                }
-                              }),
-                          SizedBox(width: 10),
-                          buildMessageView(context, widget.message)
-                        ],
-                        crossAxisAlignment: CrossAxisAlignment.start)))
-          ])
-    ], crossAxisAlignment: CrossAxisAlignment.start);
+                                  }
+                                }),
+                            SizedBox(width: 10),
+                            buildMessageView(context, widget.message)
+                          ],
+                          crossAxisAlignment: CrossAxisAlignment.start)))
+            ])
+      ], crossAxisAlignment: CrossAxisAlignment.start);
+    }
   }
 
   @override
