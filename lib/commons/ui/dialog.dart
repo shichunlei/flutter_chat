@@ -173,7 +173,12 @@ void showNameCardDialog(BuildContext context,
       context: context,
       builder: (_) {
         return NameCardDialog(
-            toUser: (chat.target as JMUserInfo),
+            name: chat.target is JMUserInfo
+                ? JPushUtil.getName((chat.target is JMUserInfo))
+                : (chat.target as JMGroupInfo).name,
+            avatar: chat.target is JMUserInfo
+                ? (chat.target as JMUserInfo).extras["avatarUrl"]
+                : groupHeaderImage,
             cardUser: cardUser,
             callBack: (String message) {
               /// 发送名片消息

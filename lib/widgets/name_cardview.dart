@@ -12,13 +12,15 @@ import 'package:flutter/material.dart';
 /// 名片弹框
 ///
 class NameCardDialog extends Dialog {
-  final JMUserInfo toUser;
+  final String avatar;
+  final String name;
   final UserBean cardUser;
   final Function(String message) callBack;
 
   NameCardDialog({
     Key key,
-    @required this.toUser,
+    this.name,
+    this.avatar,
     this.cardUser,
     this.callBack,
   }) : super(key: key);
@@ -28,22 +30,24 @@ class NameCardDialog extends Dialog {
     return Material(
         type: MaterialType.transparency,
         child: Column(children: [
-          NameCardView(toUser: toUser, cardUser: cardUser, callBack: callBack)
+          NameCardView(
+              name: name,
+              cardUser: cardUser,
+              callBack: callBack,
+              avatar: avatar)
         ], mainAxisAlignment: MainAxisAlignment.center));
   }
 }
 
 class NameCardView extends StatefulWidget {
-  const NameCardView({
-    Key key,
-    @required this.toUser,
-    @required this.cardUser,
-    this.callBack,
-  }) : super(key: key);
+  const NameCardView(
+      {Key key, @required this.cardUser, this.callBack, this.name, this.avatar})
+      : super(key: key);
 
-  final JMUserInfo toUser;
   final UserBean cardUser;
   final Function(String message) callBack;
+  final String avatar;
+  final String name;
 
   @override
   createState() => _NameCardViewState();
@@ -86,12 +90,10 @@ class _NameCardViewState extends State<NameCardView> {
                         style: TextStyle(color: Colors.black)),
                     SizedBox(height: 10),
                     Row(children: <Widget>[
-                      ImageView(widget.toUser?.extras["avatarUrl"],
-                          radius: 20,
-                          placeholder: 'images/header.jpeg'
-                          ),
+                      ImageView(widget.avatar,
+                          radius: 20, placeholder: 'images/header.jpeg'),
                       SizedBox(width: 20),
-                      Text(JPushUtil.getName(widget.toUser)),
+                      Text(widget.name),
                       Spacer(),
                       Icon(Icons.keyboard_arrow_right)
                     ]),
