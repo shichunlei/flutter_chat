@@ -10,3 +10,8 @@ BorderRadius borderRadius(MessageSendType type) {
       topLeft: Radius.circular(type == MessageSendType.send ? radius : .0),
       bottomLeft: Radius.circular(radius));
 }
+
+BorderRadius modalBottomSheet() {
+  return BorderRadius.only(
+      topLeft: Radius.circular(20.0), topRight: Radius.circular(20.0));
+}

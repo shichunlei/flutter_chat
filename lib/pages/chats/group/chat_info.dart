@@ -172,9 +172,12 @@ class _GroupChatInfoPageState extends State<GroupChatInfoPage>
                 child: SelectedText(
                     title: S.of(context).group_manager,
                     onTap: () => pushNewPage(
-                        context,
-                        GroupManagePage(
-                            isOwner: isOwner, groupId: groupInfo.id)),
+                            context,
+                            GroupManagePage(
+                                isOwner: isOwner,
+                                groupId: groupInfo.id), callBack: (bool value) {
+                          if (value) init(widget.chat); // 刷新群信息
+                        }),
                     margin: EdgeInsets.only(left: 20, right: 5))),
             SizedBox(height: 5),
             SwitchTitleView(

@@ -22,9 +22,7 @@ void showRecallMessageDialog(BuildContext context,
       context: context,
       builder: (context) {
         return ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0)),
+            borderRadius: modalBottomSheet(),
             child: Container(
                 padding: EdgeInsets.only(bottom: Utils.bottomSafeHeight),
                 height: 167.0 + Utils.bottomSafeHeight,
@@ -59,10 +57,7 @@ void showRecallMessageDialog(BuildContext context,
                           onTap: () => callBack(false)))
                 ])));
       },
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0))));
+      shape: RoundedRectangleBorder(borderRadius: modalBottomSheet()));
 }
 
 /// 删除消息底部弹窗
@@ -73,9 +68,7 @@ void showDeleteMessageDialog(BuildContext context,
       context: context,
       builder: (context) {
         return ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0)),
+            borderRadius: modalBottomSheet(),
             child: Container(
                 padding: EdgeInsets.only(bottom: Utils.bottomSafeHeight),
                 height: 167.0 + Utils.bottomSafeHeight,
@@ -110,10 +103,7 @@ void showDeleteMessageDialog(BuildContext context,
                           onTap: () => callBack(false)))
                 ])));
       },
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0))));
+      shape: RoundedRectangleBorder(borderRadius: modalBottomSheet()));
 }
 
 /// 选择地址底部弹窗
@@ -124,9 +114,7 @@ void showLocationMessageDialog(BuildContext context,
       context: context,
       builder: (context) {
         return ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0)),
+            borderRadius: modalBottomSheet(),
             child: Container(
                 padding: EdgeInsets.only(bottom: Utils.bottomSafeHeight),
                 height: 167.0 + Utils.bottomSafeHeight,
@@ -169,10 +157,7 @@ void showLocationMessageDialog(BuildContext context,
                           onTap: () => callBack(false, 'cancel')))
                 ])));
       },
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0))));
+      shape: RoundedRectangleBorder(borderRadius: modalBottomSheet()));
 }
 
 /// 名片
@@ -290,9 +275,7 @@ void showUpdateGenderDialog(BuildContext context,
       context: context,
       builder: (context) {
         return ClipRRect(
-            borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20.0),
-                topRight: Radius.circular(20.0)),
+            borderRadius: modalBottomSheet(),
             child: Container(
                 padding: EdgeInsets.only(bottom: Utils.bottomSafeHeight),
                 height: 202.0 + Utils.bottomSafeHeight,
@@ -358,10 +341,7 @@ void showUpdateGenderDialog(BuildContext context,
                           }))
                 ])));
       },
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.0),
-              topRight: Radius.circular(20.0))));
+      shape: RoundedRectangleBorder(borderRadius: modalBottomSheet()));
 }
 
 /// 账号被挤下线对话框
