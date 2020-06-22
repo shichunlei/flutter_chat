@@ -286,10 +286,14 @@ class _RegisterPageState extends State<RegisterPage> {
               .login(
                   username: user.identifier, password: Config.JMESSAGE_PASSWORD)
               .then((value) async {
-            /// 添加极光IM昵称,头像等
-            await jMessage.updateMyInfo(
+            if (user?.name != null || user?.avatarUrl != null) {
+              /// 添加极光IM昵称,头像等
+              await jMessage.updateMyInfo(
                 nickname: user?.name ?? "",
-                extras: {"avatarUrl": user?.avatarUrl ?? ""});
+                gender: JMGender.unknown, // 初始默认性别为“未知”
+                extras: {"avatarUrl": user?.avatarUrl ?? ""},
+              );
+            }
 
             /// 获取用户信息
             Provider.of<UserProvider>(context, listen: false).getUserInfo();
