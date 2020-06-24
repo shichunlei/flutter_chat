@@ -91,7 +91,7 @@ mixin MessageStateMixin<T extends StatefulWidget> on State<T> {
       // 群聊
       print('----------------------> ${groupInfo.id}');
 
-      if ((message as JMGroupInfo).id == groupInfo.id) {
+      if ((message as JMGroupInfo).targetType.groupId == groupInfo.id) {
         // 只有当接收的消息是当前会话（该群聊）时才将消息插入到会话中
         Future.delayed(Duration.zero, () {
           Provider.of<ChatProvider>(context, listen: false)
