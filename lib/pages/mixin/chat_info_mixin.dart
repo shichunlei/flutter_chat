@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../model/user.dart';
+
 import '../../commons/index.dart';
 import '../../provider/index.dart';
 import '../../utils/jpush_util.dart';
@@ -10,6 +12,8 @@ mixin ChatInfoStateMixin<T extends StatefulWidget> on State<T> {
 
   /// 单聊对方对象
   JMUserInfo userInfo;
+
+  UserBean userBean;
 
   /// 群聊对象
   JMGroupInfo groupInfo;
@@ -28,10 +32,14 @@ mixin ChatInfoStateMixin<T extends StatefulWidget> on State<T> {
   /// 群聊用户列表
   List<JMGroupMemberInfo> list = [];
 
+  List<UserBean> userList = [];
+
   Future<void> init(JMConversationInfo chat) async {
     if (chat.conversationType == JMConversationType.single) {
       userInfo = chat.target;
       isNoDisturb = userInfo.isNoDisturb;
+
+      userBean = JPushUtil.getUserBean(userInfo);
     } else if (chat.conversationType == JMConversationType.group) {
       groupInfo = chat.target;
 
@@ -56,6 +64,8 @@ mixin ChatInfoStateMixin<T extends StatefulWidget> on State<T> {
 
     list.forEach((element) {
       print("群成员=======>${element.toJson()}");
+
+      userList.add(JPushUtil.getUserBean(element.user));
     });
 
     currentUserInfo =

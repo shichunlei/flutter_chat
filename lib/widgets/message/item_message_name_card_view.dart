@@ -36,7 +36,8 @@ class NameCardMessageView extends StatelessWidget {
                               padding: const EdgeInsets.all(18.0),
                               child: Row(children: <Widget>[
                                 ImageView('${message.customObject["avatar"]}',
-                                    radius: 20),
+                                    radius: 20,
+                                    placeholder: 'images/header.jpeg'),
                                 SizedBox(width: 10),
                                 Expanded(
                                     child: Column(
@@ -44,7 +45,8 @@ class NameCardMessageView extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                      Text('${message.customObject["nickname"]}',
+                                      Text(
+                                          '${message.customObject["nickname"]}',
                                           style: TextStyle(
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold,

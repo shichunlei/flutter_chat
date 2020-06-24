@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../../../model/user.dart';
+
+import '../../contacts/choice_contacts.dart';
+
 import '../../../widgets/index.dart';
 
 import '../../../commons/index.dart';
@@ -9,7 +13,6 @@ import '../../../generated/i18n.dart';
 import '../../profile/wallpaper.dart';
 import '../../../provider/index.dart';
 
-import '../../contacts/choice_contacts.dart';
 import '../../contacts/friend.dart';
 import '../../mixin/chat_info_mixin.dart';
 
@@ -62,76 +65,38 @@ class _GroupChatInfoPageState extends State<GroupChatInfoPage>
                         crossAxisSpacing: 5.0,
                         childAspectRatio: .75),
                     itemBuilder: (_, index) {
-                      if (isAdmin || isOwner) {
-                        if (index == list.length) {
-                          /// 添加用户到群
-                          return GestureDetector(
-                              onTap: () =>
-                                  pushNewPage(context, ChoiceContactsPage()),
-                              child: Column(children: <Widget>[
-                                Container(
-                                    height: (Utils.width - 60) / 5.0,
-                                    width: (Utils.width - 60) / 5.0,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.grey[500],
-                                            width: 0.5),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Icon(Icons.add,
-                                        size: 50, color: Colors.grey[500]))
-                              ]));
-                        }
-                        if (index == list.length + 1) {
-                          /// 减去群成员
-                          return GestureDetector(
-                              onTap: () => pushNewPage(
-                                      context,
-                                      MembersPage(
-                                          members: list, groupId: groupInfo.id),
-                                      callBack: (value) async {
-                                    // 重新拉去群成员
-                                    getGroupUsers();
-                                  }),
-                              child: Column(children: <Widget>[
-                                Container(
-                                    height: (Utils.width - 60) / 5.0,
-                                    width: (Utils.width - 60) / 5.0,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.grey[500],
-                                            width: 0.5),
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: Icon(Icons.remove,
-                                        size: 50, color: Colors.grey[500]))
-                              ]));
-                        }
-                      } else {
-                        if (index == list.length) {
-                          /// 添加用户到群
-                          return GestureDetector(
-                              onTap: () =>
-                                  pushNewPage(context, ChoiceContactsPage()),
-                              child: Column(children: <Widget>[
-                                Image.asset('images/picture_box.png',
-                                    height: (Utils.width - 60) / 5.0,
-                                    width: (Utils.width - 60) / 5.0,
-                                    fit: BoxFit.fill,
-                                    color: Colors.grey)
-                              ]));
-                        }
-                      }
-
                       return ItemGridGroupMember(
                           showNickName: showNickName,
-                          member: list[index],
+                          member: index < list.length ? list[index] : null,
                           onTap: () {
                             pushNewPage(
                                 context,
                                 FriendInfoPage(
                                     identifier: list[index].user.username));
-                          });
+                          },
+                          showRemoveWidget: index == list.length + 1,
+                          onRemoveTap: () => pushNewPage(
+                                  context,
+                                  MembersPage(
+                                      members: list, groupId: groupInfo.id),
+                                  callBack: (value) {
+                                if (value) {
+                                  getGroupUsers();
+                                }
+                              }),
+                          showAddWidget: index == list.length,
+                          onAddTap: () => pushNewPage(
+                                  context,
+                                  ChoiceContactsPage(
+                                      users: userList, title: "选择联系人"),
+                                  callBack: (List<UserBean> value) async {
+                                if (null != value) {
+                                  print(
+                                      "=========================${value.toString()}");
+
+                                  addMembersToGroup(value);
+                                }
+                              }));
                     },
                     itemCount: list.length + ((isAdmin || isOwner) ? 2 : 1))),
             SelectedText(
@@ -263,5 +228,58 @@ class _GroupChatInfoPageState extends State<GroupChatInfoPage>
                         style: TextStyle(color: Colors.red))))
           ]),
         ));
+  }
+
+  /// 添加好友到群
+  void addMembersToGroup(List<UserBean> members) async {
+    if (isOwner || isAdmin) {
+      // 群主或群管理可以直接拉进群
+      List<String> usernames = [];
+      members.forEach((element) {
+        usernames.add(element.identifier);
+      });
+
+      await jMessage
+          .addGroupMembers(id: groupInfo.id, usernameArray: usernames)
+          .then((value) {
+        getGroupUsers();
+      }, onError: (error) {
+        print("addGroupMembers error => ${error.toString()}");
+      });
+    } else {
+      // 普通群成员只能发送进群邀请
+      members.forEach((element) async {
+        /// 获取会话
+        await jMessage
+            .getConversation(
+                target: JMSingle.fromJson({"username": element.identifier}))
+            .then((JMConversationInfo conversation) {
+          /// 发送进群邀请
+          Provider.of<ChatProvider>(context, listen: false)
+              .sendGroupInvitationMessage(
+                  conversation, groupInfo.id, groupInfo.name);
+        }, onError: (error) async {
+          print("getConversation error => ${error.toString()}");
+
+          if (error is PlatformException) {
+            if (error.code == "2") {
+              /// 没有改会话，创建一个会话
+              await jMessage
+                  .createConversation(
+                      target:
+                          JMSingle.fromJson({"username": element.identifier}))
+                  .then((JMConversationInfo conversation) {
+                /// 发送进群邀请
+                Provider.of<ChatProvider>(context, listen: false)
+                    .sendGroupInvitationMessage(
+                        conversation, groupInfo.id, groupInfo.name);
+              }, onError: (error) {
+                print("createConversation error => ${error.toString()}");
+              });
+            }
+          }
+        });
+      });
+    }
   }
 }

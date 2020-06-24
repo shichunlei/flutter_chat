@@ -1,13 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_chat/commons/index.dart';
-import 'package:flutter_chat/model/notify.dart';
-import 'package:lpinyin/lpinyin.dart';
 
-import '../commons/ui/loader.dart';
-import '../commons/config.dart';
+import '../commons/index.dart';
+import '../model/notify.dart';
 
-import '../utils/jpush_util.dart';
 import '../model/user.dart';
 
 import 'package:azlistview/azlistview.dart';
@@ -36,6 +32,41 @@ class ContactProvider extends ChangeNotifier {
     _selectContacts = [];
   }
 
+  List<UserBean> _choiceContacts = [];
+
+  List<UserBean> get choiceContacts => _choiceContacts;
+
+  Future initChoiceContacts(List<UserBean> choiceContacts) async {
+    clear();
+    _choiceContacts.clear();
+
+    if (_friends.length == 0) {
+      await getFriends();
+    }
+
+    _friends.forEach((element) {
+      element.checkedState = 0;
+      _choiceContacts.add(element);
+    });
+
+    _choiceContacts.forEach((friend) {
+      choiceContacts.forEach((choiceContact) {
+        if (choiceContact.identifier == friend.identifier)
+          friend.checkedState = 2;
+      });
+    });
+
+    notifyListeners();
+  }
+
+  Future checkChoiceContacts(bool checked, int index) async {
+    _choiceContacts[index].checkedState = checked ? 1 : 0;
+
+    toggleContact(_choiceContacts[index]);
+
+    notifyListeners();
+  }
+
   List<UserBean> _friends = [];
 
   List<UserBean> get friends => _friends;
@@ -49,21 +80,7 @@ class ContactProvider extends ChangeNotifier {
       _friends.clear();
 
       friends.forEach((element) {
-        String firstLetter;
-
-        String tag =
-            PinyinHelper.getPinyinE(JPushUtil.getName(element)).toUpperCase();
-        if (RegExp("[A-Z]").hasMatch(tag)) {
-          firstLetter = tag[0];
-        } else {
-          firstLetter = "#";
-        }
-
-        _friends.add(UserBean(
-            name: JPushUtil.getName(element),
-            avatarUrl: element.extras['avatarUrl'] ?? "",
-            identifier: element.username,
-            firstLetter: firstLetter));
+        _friends.add(JPushUtil.getUserBean(element));
       });
 
       /// 排序
@@ -88,21 +105,7 @@ class ContactProvider extends ChangeNotifier {
             .where((element) => user.username == element.identifier)
             .length ==
         0) {
-      String firstLetter;
-
-      String tag =
-          PinyinHelper.getPinyinE(JPushUtil.getName(user)).toUpperCase();
-      if (RegExp("[A-Z]").hasMatch(tag)) {
-        firstLetter = tag[0];
-      } else {
-        firstLetter = "#";
-      }
-
-      _friends.add(UserBean(
-          name: JPushUtil.getName(user),
-          avatarUrl: user.extras['avatarUrl'] ?? "",
-          identifier: user.username,
-          firstLetter: firstLetter));
+      _friends.add(JPushUtil.getUserBean(user));
 
       /// 排序
       SuspensionUtil.sortListBySuspensionTag(_friends);

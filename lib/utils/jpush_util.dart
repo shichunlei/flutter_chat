@@ -1,6 +1,8 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_chat/model/user.dart';
 
 import 'package:jmessage_flutter/jmessage_flutter.dart';
+import 'package:lpinyin/lpinyin.dart';
 
 import 'package:platform/platform.dart';
 
@@ -48,6 +50,26 @@ class JPushUtil {
     }
   }
 
+  /// 将JMUserInfo转化成UserBean
+  static UserBean getUserBean(JMUserInfo userInfo) {
+    String firstLetter;
+
+    String name = JPushUtil.getName(userInfo);
+
+    String tag = PinyinHelper.getPinyinE(name).toUpperCase();
+    if (RegExp("[A-Z]").hasMatch(tag)) {
+      firstLetter = tag[0];
+    } else {
+      firstLetter = "#";
+    }
+
+    return UserBean(
+        name: name,
+        avatarUrl: userInfo.extras['avatarUrl'] ?? "",
+        identifier: userInfo.username,
+        firstLetter: firstLetter);
+  }
+
   /// 会话最后一条信息
   ///
   static String getLastMessageStr(JMConversationInfo conversationInfo) {
@@ -67,6 +89,10 @@ class JPushUtil {
       } else if (latestMessage is JMCustomMessage) {
         if (latestMessage.customObject["type"] == "namecard") {
           return '[名片]';
+        } else if (latestMessage.customObject["type"] == "shake") {
+          return '[拍一拍]';
+        } else if (latestMessage.customObject["type"] == "groupInvitation") {
+          return '[入群邀请]';
         } else {
           return '';
         }
@@ -96,40 +122,6 @@ class JPushUtil {
           return false;
         }
       }
-    }
-  }
-
-  static dynamic getMessage(message) async {
-    if (message is JMTextMessage) {
-      // 文本消息
-      print('JMTextMessage => ${message.text}');
-      return message;
-    } else if (message is JMImageMessage) {
-      // 图片消息
-      print('JMImageMessage => ${message.thumbPath}');
-      return message;
-    } else if (message is JMVoiceMessage) {
-      // 语音消息
-      print('JMVoiceMessage => ${message.path}');
-      return message;
-    } else if (message is JMLocationMessage) {
-      // 地址消息
-      print(
-          'JMLocationMessage => ${message.longitude},${message.latitude},${message.scale}');
-      return message;
-    } else if (message is JMFileMessage) {
-      // 文件消息
-      print('JMFileMessage => ${message.fileName}');
-      return message;
-    } else if (message is JMCustomMessage) {
-      // 自定义消息
-      print('JMCustomMessage => ${message.extras["type"]}');
-
-      if (message.extras["type"] == "namecard") {
-        // 发送名片
-        return message;
-      }
-      return message;
     }
   }
 }

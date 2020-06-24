@@ -36,12 +36,11 @@ class _ItemGroupState extends State<ItemGroup>
         child: InkWell(
             child: Container(
                 child: Row(children: <Widget>[
-                  ImageView(
-                    groupHeaderImage,
-                    radius: 5,
-                    height: 35,
-                    width: 35,
-                  ),
+                  ImageView(groupHeaderImage,
+                      radius: 5,
+                      height: 35,
+                      width: 35,
+                      placeholder: 'images/header.jpeg'),
                   SizedBox(width: 20),
                   Text('${groupInfo?.name ?? ""}'),
                 ]),

@@ -37,7 +37,8 @@ class _ItemGroupMemberState extends State<ItemGroupMember> {
                   ImageView(widget.member.user.extras["avatarUrl"],
                       width: 40,
                       height: 40,
-                      radius: 10),
+                      radius: 10,
+                      placeholder: 'images/header.jpeg'),
                   SizedBox(width: 10),
                   Expanded(
                       child: Text(Utils.isEmpty(widget.member.groupNickname)

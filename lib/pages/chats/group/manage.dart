@@ -86,78 +86,41 @@ class _GroupManagePageState extends State<GroupManagePage> {
                         crossAxisSpacing: 5.0,
                         childAspectRatio: .75),
                     itemBuilder: (_, index) {
-                      if (widget.isOwner) {
-                        if (index == admins.length) {
-                          /// 添加用户到群
-                          return GestureDetector(
-                              onTap: () {
-                                addAdminChecked.clear();
-
-                                /// 添加群管理
-                                allMembers.forEach((element) {
-                                  if (element.memberType !=
-                                      JMGroupMemberType.ordinary) {
-                                    addAdminChecked.add(2);
-                                  } else {
-                                    addAdminChecked.add(0);
-                                  }
-                                });
-                                newAdmins.clear();
-
-                                showAddAdminModalBottomSheet();
-                              },
-                              child: Column(children: <Widget>[
-                                Container(
-                                    height: (Utils.width - 60) / 5.0,
-                                    width: (Utils.width - 60) / 5.0,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.grey[500],
-                                            width: 0.5),
-                                        borderRadius: BorderRadius.circular(5)),
-                                    child: Icon(Icons.add,
-                                        size: 50, color: Colors.grey[500]))
-                              ]));
-                        }
-                        if (index == admins.length + 1) {
-                          /// 减去群成员
-                          return GestureDetector(
-                              onTap: () {
-                                if (admins.length > 0) {
-                                  adminChecked.clear();
-
-                                  admins.forEach((element) {
-                                    adminChecked.add(false);
-                                  });
-
-                                  removeAdmins.clear();
-
-                                  showRemoveAdminModalBottomSheet();
-                                }
-                              },
-                              child: Column(children: <Widget>[
-                                Container(
-                                    height: (Utils.width - 60) / 5.0,
-                                    width: (Utils.width - 60) / 5.0,
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.grey[500],
-                                            width: 0.5),
-                                        borderRadius: BorderRadius.circular(5)),
-                                    child: Icon(Icons.remove,
-                                        size: 50, color: Colors.grey[500]))
-                              ]));
-                        }
-                      }
-
                       return ItemGridGroupMember(
                           showNickName: true,
-                          member: admins[index],
-                          onTap: () {
-                            pushNewPage(
-                                context,
-                                FriendInfoPage(
-                                    identifier: admins[index].user.username));
+                          member: index < admins.length ? admins[index] : null,
+                          onTap: () => pushNewPage(
+                              context,
+                              FriendInfoPage(
+                                  identifier: admins[index].user.username)),
+                          showAddWidget: index == admins.length,
+                          onAddTap: () {
+                            addAdminChecked.clear();
+
+                            /// 添加群管理
+                            allMembers.forEach((element) {
+                              if (element.memberType !=
+                                  JMGroupMemberType.ordinary) {
+                                addAdminChecked.add(2);
+                              } else {
+                                addAdminChecked.add(0);
+                              }
+                            });
+                            newAdmins.clear();
+
+                            showAddAdminModalBottomSheet();
+                          },
+                          showRemoveWidget: index == admins.length + 1,
+                          onRemoveTap: () {
+                            adminChecked.clear();
+
+                            admins.forEach((element) {
+                              adminChecked.add(false);
+                            });
+
+                            removeAdmins.clear();
+
+                            showRemoveAdminModalBottomSheet();
                           });
                     },
                     itemCount: admins.length +
@@ -208,11 +171,11 @@ class _GroupManagePageState extends State<GroupManagePage> {
                           });
                           Navigator.pop(context);
 
-                          showTransferDialog();
+                          showTransferDialog(context);
                         },
                         title: Row(children: <Widget>[
                           ImageView(allMembers[index].user.extras["avatarUrl"],
-                              radius: 18),
+                              radius: 18, placeholder: 'images/header.jpeg'),
                           SizedBox(width: 8),
                           Text(JPushUtil.getName(allMembers[index].user))
                         ]));
@@ -228,10 +191,10 @@ class _GroupManagePageState extends State<GroupManagePage> {
   }
 
   /// 转让群主待确认对话框
-  void showTransferDialog() async {
+  void showTransferDialog(context) async {
     showDialog(
         context: context,
-        builder: (context) {
+        builder: (BuildContext context) {
           return AlertDialog(
               title: Text("转让群"),
               content: Text(
@@ -248,7 +211,7 @@ class _GroupManagePageState extends State<GroupManagePage> {
                               username: allMembers[int.parse(groupValue)]
                                   .user
                                   .username)
-                          .then((value) => Navigator.pop(context, true),
+                          .then((value) => Navigator.maybePop(context, true),
                               onError: (error) {
                         print(
                             "transferGroupOwner error => ${error.toString()}");
@@ -256,9 +219,7 @@ class _GroupManagePageState extends State<GroupManagePage> {
                     },
                     child: Text(S.of(context).sure)),
                 FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                    onPressed: () => Navigator.pop(context),
                     child: Text(S.of(context).cancel)),
               ]);
         });
@@ -268,7 +229,7 @@ class _GroupManagePageState extends State<GroupManagePage> {
   void showAddAdminModalBottomSheet() async {
     showModalBottomSheet(
         context: context,
-        builder: (context) {
+        builder: (BuildContext context) {
           return StatefulBuilder(builder: (context, state) {
             return ClipRRect(
                 borderRadius: modalBottomSheet(),
@@ -341,7 +302,8 @@ class _GroupManagePageState extends State<GroupManagePage> {
                                           allMembers[index]
                                               .user
                                               .extras["avatarUrl"],
-                                          radius: 18),
+                                          radius: 18,
+                                          placeholder: 'images/header.jpeg'),
                                       SizedBox(width: 8),
                                       Text(JPushUtil.getName(
                                           allMembers[index].user))
@@ -360,7 +322,7 @@ class _GroupManagePageState extends State<GroupManagePage> {
   void showRemoveAdminModalBottomSheet() async {
     showModalBottomSheet(
         context: context,
-        builder: (context) {
+        builder: (BuildContext context) {
           return StatefulBuilder(builder: (context, state) {
             return ClipRRect(
                 borderRadius: modalBottomSheet(),
@@ -427,7 +389,8 @@ class _GroupManagePageState extends State<GroupManagePage> {
                                   title: Row(children: <Widget>[
                                     ImageView(
                                         admins[index].user.extras["avatarUrl"],
-                                        radius: 18),
+                                        radius: 18,
+                                        placeholder: 'images/header.jpeg'),
                                     SizedBox(width: 8),
                                     Text(JPushUtil.getName(admins[index].user))
                                   ]));

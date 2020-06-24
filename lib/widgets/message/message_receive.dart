@@ -184,19 +184,20 @@ class _MessageReceiveViewState extends State<MessageReceiveView>
       print('JMCustomMessage => ${_message.customObject["type"]}');
 
       if (_message.customObject["type"] == "namecard") {
-        // 发送名片
+        // 名片消息
         return NameCardMessageView(
             message: message, type: MessageSendType.receive);
       } else if (_message.customObject["type"] == "groupInvitation") {
-        // 发送群邀请
+        // 群邀请消息
         return GroupInvitationView(
-            message: message, type: MessageSendType.receive);
+            message: message,
+            type: MessageSendType.receive,
+            toUser: widget.chat.target as JMUserInfo);
       } else if (_message.customObject["type"] == "shake") {
-        // 发送拍了拍消息
+        // 拍了拍消息
         return ShakeMessageView(
-          message: message,
-          currentUser: Provider.of<UserProvider>(context).userInfo,
-        );
+            message: message,
+            currentUser: Provider.of<UserProvider>(context).userInfo);
       }
       return Container();
     } else {

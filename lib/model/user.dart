@@ -14,13 +14,16 @@ class UserBean extends ISuspensionBean {
 
   String firstLetter;
 
+  int checkedState;
+
   UserBean(
       {this.id,
       this.name,
       this.avatarUrl,
       this.mobile,
       this.identifier,
-      this.firstLetter});
+      this.firstLetter,
+      this.checkedState = 0});
 
   static UserBean fromMap(Map<String, dynamic> map) {
     if (map == null) return null;
@@ -48,6 +51,7 @@ class UserBean extends ISuspensionBean {
         "mobile": mobile,
         "identifier": identifier,
         "firstLetter": firstLetter,
+        "checkedState": checkedState,
       };
 
   @override

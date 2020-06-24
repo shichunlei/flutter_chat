@@ -41,7 +41,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.white,
                       highlightColor: Color(0xd9d9d9),
                       onPressed: () =>
-                          pushAndRemovePage(context, PhoneLoginFirstPage()))),
+                          pushNewPage(context, PhoneLoginFirstPage()))),
               SizedBox(width: 30),
               Expanded(
                   child: RaisedButton(
@@ -51,8 +51,7 @@ class _LoginPageState extends State<LoginPage> {
                           borderRadius: BorderRadius.circular(8)),
                       color: Color(0xFF06AD56),
                       highlightColor: Color(0xFF06AD56),
-                      onPressed: () =>
-                          pushAndRemovePage(context, RegisterPage())))
+                      onPressed: () => pushNewPage(context, RegisterPage())))
             ]),
             bottom: 50,
             left: 30,

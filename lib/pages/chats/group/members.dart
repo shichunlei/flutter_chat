@@ -88,10 +88,10 @@ class _MembersPageState extends State<MembersPage> {
         _members.retainWhere((element) => element.user.username == username);
       });
 
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(true);
     }, onError: (error) {
       Toast.show(context, '退出群聊失败');
-      Navigator.of(context).pop();
+      Navigator.of(context).pop(false);
       if (error is PlatformException) {
         print('removeGroupMembers error => ${error.toString()}');
       }

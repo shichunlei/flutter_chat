@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-import '../../pages/chats/single/message.dart';
-
 import '../../commons/index.dart';
 
 import '../../generated/i18n.dart';
@@ -321,23 +319,6 @@ class _FriendInfoPageState extends State<FriendInfoPage> {
         }
         print('getUserInfo error => ${error.toString()}');
       }
-    });
-  }
-
-  /// 创建一个会话
-  ///
-  void createChat(BuildContext context) async {
-    await jMessage.createConversation(target: friendInfo?.targetType).then(
-        (JMConversationInfo value) {
-      print("createConversation => ${value.toJson()}");
-
-      Provider.of<ChatProvider>(context, listen: false).getChats().then((_) {
-        pushNewPage(context, SingleMessagePage(chat: value));
-      });
-    }, onError: (error) {
-      print('createConversation error => ${error.toString()}');
-
-      if (error is PlatformException) {}
     });
   }
 

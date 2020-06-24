@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../login/input_phone.dart';
 
 import '../../generated/i18n.dart';
 import '../../commons/index.dart';
@@ -39,42 +40,42 @@ class _SettingPageState extends State<SettingPage> {
                   title: S.of(context).account_security,
                   onTap: () => pushNewPage(context, SafePage()),
                   margin: EdgeInsets.only(left: 20, right: 5)),
-              Container(height: 5),
+              SizedBox(height: 5),
               SelectedText(
                   title: S.of(context).notifications,
                   onTap: () {},
                   margin: EdgeInsets.only(left: 20, right: 5)),
-              Container(height: .5),
+              SizedBox(height: .5),
               SelectedText(
                   title: S.of(context).do_not_disturb,
                   onTap: () {},
                   margin: EdgeInsets.only(left: 20, right: 5)),
-              Container(height: .5),
+              SizedBox(height: .5),
               SelectedText(
                   title: S.of(context).chats,
                   onTap: () {},
                   margin: EdgeInsets.only(left: 20, right: 5)),
-              Container(height: .5),
+              SizedBox(height: .5),
               SelectedText(
                   title: S.of(context).privacy,
                   onTap: () => pushNewPage(context, PrivacyPage()),
                   margin: EdgeInsets.only(left: 20, right: 5)),
-              Container(height: .5),
+              SizedBox(height: .5),
               SelectedText(
                   title: S.of(context).general,
                   onTap: () => pushNewPage(context, GeneralPage()),
                   margin: EdgeInsets.only(left: 20, right: 5)),
-              Container(height: 5),
+              SizedBox(height: 5),
               SelectedText(
                   title: S.of(context).about,
                   onTap: () => pushNewPage(context, AboutWechatPage()),
                   margin: EdgeInsets.only(left: 20, right: 5)),
-              Container(height: .5),
+              SizedBox(height: .5),
               SelectedText(
                   title: S.of(context).help_feedback,
                   onTap: () {},
                   margin: EdgeInsets.only(left: 20, right: 5)),
-              Container(height: 5),
+              SizedBox(height: 5),
               SelectedText(
                   title: S.of(context).wechat_services,
                   onTap: () {},
@@ -85,7 +86,10 @@ class _SettingPageState extends State<SettingPage> {
                   margin: EdgeInsets.only(top: 5, bottom: 5),
                   child: FlatButton(
                       color: Colors.white,
-                      onPressed: () async {},
+                      onPressed: () {
+                        SpUtil.clear();
+                        pushAndRemovePage(context, PhoneLoginFirstPage());
+                      },
                       child: Text(S.of(context).switch_account))),
               Container(
                   width: double.infinity,

@@ -15,9 +15,13 @@ class MessageSendView extends StatelessWidget {
   final String time;
   final JMConversationInfo chat;
 
-  const MessageSendView(
-      {Key key, @required this.message, this.player, this.time, this.chat})
-      : super(key: key);
+  const MessageSendView({
+    Key key,
+    @required this.message,
+    this.player,
+    this.time,
+    this.chat,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -98,20 +102,18 @@ class MessageSendView extends StatelessWidget {
                           (BuildContext context, UserProvider userProvider,
                               ChatProvider chatProvider, Widget child) {
                         return ShakeView(
-                          child: ImageView(
-                              '${userProvider.userInfo.extras["avatarUrl"]}',
-                              radius: 5,
-                              height: 35,
-                              width: 35,
-                              placeholder: 'images/header.jpeg'),
-                          doubleTapCallback: (bool value) {
-                            if (value) {
-                              print("拍了拍自己");
-//                              chatProvider.sendShakeMessage(
-//                                  chat, userProvider.userInfo);
-                            }
-                          },
-                        );
+                            child: ImageView(
+                                '${userProvider.userInfo.extras["avatarUrl"]}',
+                                radius: 5,
+                                height: 35,
+                                width: 35,
+                                placeholder: 'images/header.jpeg'),
+                            doubleTapCallback: (bool value) {
+                              if (value) {
+                                print("拍了拍自己");
+//                              chatProvider.sendShakeMessage(chat, userProvider.userInfo);
+                              }
+                            });
                       }),
                     ])))
       ])
@@ -141,19 +143,20 @@ class MessageSendView extends StatelessWidget {
       print('JMCustomMessage => ${_message.customObject["type"]}');
 
       if (_message.customObject["type"] == "namecard") {
-        // 发送名片
+        // 名片消息
         return NameCardMessageView(
             message: message, type: MessageSendType.send);
       } else if (_message.customObject["type"] == "groupInvitation") {
-        // 发送群邀请
+        // 群邀请消息
         return GroupInvitationView(
-            message: message, type: MessageSendType.send);
+            message: message,
+            type: MessageSendType.send,
+            toUser: chat.target as JMUserInfo);
       } else if (_message.customObject["type"] == "shake") {
-        // 发送拍了拍消息
+        // 拍了拍消息
         return ShakeMessageView(
-          message: message,
-          currentUser: Provider.of<UserProvider>(context).userInfo,
-        );
+            message: message,
+            currentUser: Provider.of<UserProvider>(context).userInfo);
       }
       return Container();
     } else {

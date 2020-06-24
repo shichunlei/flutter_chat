@@ -1,4 +1,3 @@
-import '../utils/jpush_util.dart';
 import '../utils/utils.dart';
 
 import '../generated/i18n.dart';

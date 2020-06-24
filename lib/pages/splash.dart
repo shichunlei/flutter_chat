@@ -27,9 +27,9 @@ class _SplashPageState extends State<SplashPage> {
       if (isLogin) {
         Provider.of<UserProvider>(context, listen: false).getUserInfo();
 
-        pushAndRemovePage(context, HomePage());
+        pushReplacementPage(context, HomePage());
       } else {
-        pushAndRemovePage(context, LoginPage());
+        pushReplacementPage(context, LoginPage());
       }
     });
   }

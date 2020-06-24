@@ -32,7 +32,8 @@ class ItemFriendNotify extends StatelessWidget {
                       isReceive ? notify.from.avatarUrl : notify.user.avatarUrl,
                       height: 40,
                       width: 40,
-                      radius: 8),
+                      radius: 8,
+                      placeholder: 'images/header.jpeg'),
                   SizedBox(width: 10),
                   Expanded(
                       child: Column(

@@ -30,7 +30,6 @@ class ImageMessageView extends StatelessWidget {
                     tag: message?.id,
                     child: Image.file(File('${message?.thumbPath}'))))),
         onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
           pushNewPage(
               context,
               PhotoViewPage(

@@ -50,7 +50,8 @@ class _PhoneLoginFirstPageState extends State<PhoneLoginFirstPage> {
                 padding: EdgeInsets.all(20),
                 child: Column(children: [
                   SizedBox(height: 50),
-                  Text(S.of(context).mobileNumberLogin, style: Theme.of(context).textTheme.headline5),
+                  Text(S.of(context).mobileNumberLogin,
+                      style: Theme.of(context).textTheme.headline5),
                   SizedBox(height: 20),
                   Padding(
                       padding: const EdgeInsets.symmetric(vertical: 12.0),
@@ -133,15 +134,11 @@ class _PhoneLoginFirstPageState extends State<PhoneLoginFirstPage> {
                                   String username =
                                       phoneController.text.toString();
 
-                                  if (Utils.isNotEmpty(username)) {
-                                    /// 隐藏键盘
-                                    FocusScope.of(context)
-                                        .requestFocus(FocusNode());
+                                  if (Utils.isNotEmpty(username))
                                     pushNewPage(
                                         context,
                                         PhoneLoginNextPage(
                                             phone: username, code: _zoneCode));
-                                  }
                                 }
                               : null,
                           child: Text('${S.of(context).next}',

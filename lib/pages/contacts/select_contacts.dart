@@ -6,6 +6,7 @@ import '../../widgets/index.dart';
 
 import 'package:flutter/material.dart';
 
+/// 发送名片时选择好友列表操作
 class SelectContactsPage extends StatefulWidget {
   SelectContactsPage({Key key}) : super(key: key);
 
@@ -14,8 +15,10 @@ class SelectContactsPage extends StatefulWidget {
 }
 
 class _SelectContactsPageState extends State<SelectContactsPage> {
+  /// 所有的好友
   List<UserBean> allContacts = [];
 
+  /// 搜索出的
   List<UserBean> contacts = [];
 
   LoaderState state = LoaderState.Loading;
@@ -107,9 +110,14 @@ class _SelectContactsPageState extends State<SelectContactsPage> {
     allContacts.clear();
     contacts.clear();
 
-    Future.delayed(Duration.zero, () {
-      allContacts =
-          Provider.of<ContactProvider>(context, listen: false).friends;
+    Future.delayed(Duration.zero, () async {
+      var provider = Provider.of<ContactProvider>(context, listen: false);
+
+      if (provider.friends.length == 0) {
+        await provider.getFriends();
+      }
+
+      allContacts = provider.friends;
 
       contacts.addAll(allContacts);
 

@@ -206,19 +206,30 @@ class ChatProvider extends ChangeNotifier {
   /// [targetType] 会话类型(JMSingle | JMGroup | JMChatRoom)
   /// [isJump] 是否跳转到会话聊天页
   /// [isCreate] 如果会话不存在是否创建会话
+  /// [hiddenLoading]
   ///
   Future jumpToConversationMessage(BuildContext context, dynamic targetType,
-      {bool isJump: true, bool isCreate: true}) async {
+      {bool isJump: true,
+      bool isCreate: true,
+      bool hiddenLoading: false}) async {
     await jMessage.getConversation(target: targetType).then(
-        (JMConversationInfo conversation) {
+        (JMConversationInfo conversation) async {
       print('getConversation ${conversation.toJson()}');
 
       if (isJump) {
-        getHistoryMessages(conversation, 0).then((_) {
+        await getHistoryMessages(conversation, 0).then((_) async {
+          await getCurrentChatBgImage(conversation);
+          if (hiddenLoading) {
+            Navigator.maybePop(context);
+          }
           if (targetType is JMSingle) {
             pushNewPage(context, SingleMessagePage(chat: conversation));
           } else {
             pushNewPage(context, GroupMessagePage(chat: conversation));
+          }
+        }, onError: (error) {
+          if (hiddenLoading) {
+            Navigator.maybePop(context);
           }
         });
       }
@@ -229,6 +240,14 @@ class ChatProvider extends ChangeNotifier {
           if (isCreate) {
             /// 创建会话
             createConversation(context, targetType, isJump: isJump);
+          } else {
+            if (hiddenLoading) {
+              Navigator.maybePop(context);
+            }
+          }
+        } else {
+          if (hiddenLoading) {
+            Navigator.maybePop(context);
           }
         }
         print('getConversation error => ${error.toString()}');
@@ -243,23 +262,34 @@ class ChatProvider extends ChangeNotifier {
   /// [isJump] 是否跳转到会话聊天页
   ///
   Future createConversation(BuildContext context, dynamic targetType,
-      {bool isJump: true}) async {
+      {bool isJump: true, bool hiddenLoading: false}) async {
     await jMessage.createConversation(target: targetType).then(
         (JMConversationInfo conversation) {
       print("createConversation => ${conversation.toJson()}");
 
-      getChats().then((_) {
+      getChats().then((_) async {
         if (isJump) {
-          getHistoryMessages(conversation, 0).then((__) {
+          await getHistoryMessages(conversation, 0).then((__) async {
+            await getCurrentChatBgImage(conversation);
+            if (hiddenLoading) {
+              Navigator.maybePop(context);
+            }
             if (targetType is JMSingle) {
               pushNewPage(context, SingleMessagePage(chat: conversation));
             } else {
               pushNewPage(context, GroupMessagePage(chat: conversation));
             }
+          }, onError: (error) {
+            if (hiddenLoading) {
+              Navigator.maybePop(context);
+            }
           });
         }
       });
     }, onError: (error) {
+      if (hiddenLoading) {
+        Navigator.maybePop(context);
+      }
       print('createConversation error => ${error.toString()}');
 
       if (error is PlatformException) {}

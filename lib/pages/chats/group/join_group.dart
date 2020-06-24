@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_chat/commons/index.dart';
+
+import '../../../commons/index.dart';
 
 class JoinGroupPage extends StatefulWidget {
   final String groupId;
@@ -43,7 +44,11 @@ class _JoinGroupPageState extends State<JoinGroupPage> {
               color: Colors.white,
               height: 170,
               child: Column(children: [
-                ImageView(groupHeaderImage, height: 80, width: 80, radius: 5),
+                ImageView(groupHeaderImage,
+                    height: 80,
+                    width: 80,
+                    radius: 5,
+                    placeholder: 'images/header.jpeg'),
                 SizedBox(height: 5),
                 Text('${jmGroupInfo?.name ?? ""}',
                     style: TextStyle(fontSize: 17)),
@@ -63,7 +68,7 @@ class _JoinGroupPageState extends State<JoinGroupPage> {
                       onPressed: () {},
                       minWidth: 220,
                       color: Colors.green,
-                      child: Text('加入群聊',
+                      child: Text('申请加入群聊',
                           style: TextStyle(color: Colors.white, fontSize: 18))),
                   Padding(
                       padding:
@@ -82,7 +87,9 @@ class _JoinGroupPageState extends State<JoinGroupPage> {
       setState(() {
         jmGroupInfo = value;
       });
-    }, onError: (error) {});
+    }, onError: (error) {
+      print("getGroupInfo error => ${error.toString()}");
+    });
 
     await jMessage.getGroupMembers(id: groupId).then((value) {
       _list.addAll(value);
@@ -94,7 +101,9 @@ class _JoinGroupPageState extends State<JoinGroupPage> {
           0;
 
       setState(() {});
-    }, onError: (error) {});
+    }, onError: (error) {
+      print("getGroupMembers error => ${error.toString()}");
+    });
 
     setState(() {});
   }
