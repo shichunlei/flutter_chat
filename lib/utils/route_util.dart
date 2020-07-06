@@ -27,3 +27,7 @@ void pushReplacementPage(BuildContext context, Widget routePage) {
   Navigator.pushReplacement(
       context, MaterialPageRoute(builder: (BuildContext context) => routePage));
 }
+
+void popUntilPage(BuildContext context, String pageName) {
+  Navigator.of(context).popUntil(ModalRoute.withName(pageName));
+}

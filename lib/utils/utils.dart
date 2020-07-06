@@ -25,6 +25,13 @@ class Utils {
     return mediaQuery.padding.top + kToolbarHeight;
   }
 
+  /// 键盘高度
+  ///
+  static double get keyboardHeight {
+    MediaQueryData mediaQuery = MediaQueryData.fromWindow(ui.window);
+    return mediaQuery.viewInsets.bottom ?? 0.0;
+  }
+
   /// 状态栏高度
   ///
   static double get topSafeHeight {

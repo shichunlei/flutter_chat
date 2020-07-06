@@ -31,6 +31,9 @@ class Config {
   /// 允许好友查看朋友圈的时间范围
   static const String KEY_VIEWABLE = '_KEY_VIEWABLE_';
 
+  /// 键盘高度
+  static const String KEY_KEYBOARD_HEIGHT = '_KEY_KEYBOARD_HEIGHT_';
+
   /// 极光IM密码
   static const String JMESSAGE_PASSWORD = '123456';
 }

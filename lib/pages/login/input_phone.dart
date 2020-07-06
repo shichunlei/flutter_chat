@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
+
 import '../../model/zone_code.dart';
 
 import '../../generated/i18n.dart';
@@ -28,6 +30,16 @@ class _PhoneLoginFirstPageState extends State<PhoneLoginFirstPage> {
   @override
   void initState() {
     super.initState();
+
+    KeyboardVisibility.onChange.listen((bool visible) {
+      print('Keyboard visibility update. Is visible: $visible');
+
+      print("键盘高度为：${Utils.keyboardHeight}");
+
+      if (Utils.keyboardHeight > 0) {
+        SpUtil.setDouble(Config.KEY_KEYBOARD_HEIGHT, Utils.keyboardHeight);
+      }
+    });
 
     phoneController.addListener(() {
       setState(() {});
