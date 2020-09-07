@@ -1,5 +1,6 @@
 class APIs {
-  static const String BASE_URL = 'http://data.chingsoft.com/api/wechat/';
+//  static const String BASE_URL = 'http://data.chingsoft.com/api/wechat/';
+  static const String BASE_URL = 'http://101.200.174.126:8898/api/wechat/';
 
   static const String LOGIN = "users/login";
 
