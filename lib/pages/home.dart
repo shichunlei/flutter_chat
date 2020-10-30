@@ -1,8 +1,7 @@
-import '../utils/toast_util.dart';
-
-import '../generated/i18n.dart';
 import 'package:flutter/material.dart';
 
+import '../generated/i18n.dart';
+import '../utils/toast_util.dart';
 import 'chats/chats.dart';
 import 'contacts/contacts.dart';
 import 'discover/discover.dart';
@@ -82,25 +81,25 @@ class _HomePageState extends State<HomePage>
                           fit: BoxFit.fitHeight, height: 23),
                       activeIcon: Image.asset('images/tabbar_mainframeHL.png',
                           fit: BoxFit.fitHeight, height: 23),
-                      title: Text(S.of(context).tab_chat)),
+                      label: S.of(context).tab_chat),
                   BottomNavigationBarItem(
                       icon: Image.asset('images/tabbar_contacts.png',
                           fit: BoxFit.fitHeight, height: 23),
                       activeIcon: Image.asset('images/tabbar_contactsHL.png',
                           fit: BoxFit.fitHeight, height: 23),
-                      title: Text(S.of(context).tab_contacts)),
+                      label: S.of(context).tab_contacts),
                   BottomNavigationBarItem(
                       icon: Image.asset('images/tabbar_discover.png',
                           fit: BoxFit.fitHeight, height: 23),
                       activeIcon: Image.asset('images/tabbar_discoverHL.png',
                           fit: BoxFit.fitHeight, height: 23),
-                      title: Text(S.of(context).tab_discover)),
+                      label: S.of(context).tab_discover),
                   BottomNavigationBarItem(
                       icon: Image.asset('images/tabbar_me.png',
                           fit: BoxFit.fitHeight, height: 23),
                       activeIcon: Image.asset('images/tabbar_meHL.png',
                           fit: BoxFit.fitHeight, height: 23),
-                      title: Text(S.of(context).tab_mine)),
+                      label: S.of(context).tab_mine),
                 ])));
   }
 }

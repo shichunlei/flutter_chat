@@ -3,12 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 
-import '../../model/zone_code.dart';
-
-import '../../generated/i18n.dart';
-
 import '../../commons/index.dart';
-
+import '../../generated/i18n.dart';
+import '../../model/zone_code.dart';
 import 'area_code.dart';
 import 'forget_password.dart';
 import 'next_login.dart';
@@ -106,7 +103,7 @@ class _PhoneLoginFirstPageState extends State<PhoneLoginFirstPage> {
                                 fillColor: Colors.transparent,
                                 filled: true),
                             inputFormatters: <TextInputFormatter>[
-                          WhitelistingTextInputFormatter.digitsOnly,
+                          FilteringTextInputFormatter.digitsOnly,
                           LengthLimitingTextInputFormatter(11)
                         ]))
                   ]),

@@ -1,11 +1,9 @@
 import 'package:amap_map_fluttify/amap_map_fluttify.dart';
-
+import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../model/position.dart';
 import '../../generated/i18n.dart';
-
-import 'package:flutter/material.dart';
+import '../../model/position.dart';
 
 class PositionInformationPage extends StatefulWidget {
   final Position location;
@@ -48,8 +46,8 @@ class _PositionInformationPageState extends State<PositionInformationPage> {
 
                 await _controller.addMarker(MarkerOption(
                     latLng: widget.location.poi.latLng,
-                    iconUri: Uri.parse('images/icon_location.png'),
-                    imageConfig: createLocalImageConfiguration(context),
+                    iconProvider: AssetImage("images/icon_location.png"),
+//                    imageConfig: createLocalImageConfiguration(context),
                     title: widget.location.poi.title,
                     snippet: '描述'));
               } else {

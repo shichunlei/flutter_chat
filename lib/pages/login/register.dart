@@ -3,15 +3,11 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../model/user.dart';
-
-import '../../provider/index.dart';
-
-import '../../generated/i18n.dart';
 import '../../commons/index.dart';
-
+import '../../generated/i18n.dart';
+import '../../model/user.dart';
 import '../../model/zone_code.dart';
-
+import '../../provider/index.dart';
 import '../home.dart';
 import '../webview.dart';
 import 'area_code.dart';
@@ -161,7 +157,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 fillColor: Colors.transparent,
                                 filled: true),
                             inputFormatters: <TextInputFormatter>[
-                          WhitelistingTextInputFormatter.digitsOnly,
+                          FilteringTextInputFormatter.digitsOnly,
                           LengthLimitingTextInputFormatter(11)
                         ]))
                   ]),

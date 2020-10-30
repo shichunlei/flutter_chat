@@ -8,10 +8,8 @@ import 'package:flutter_chat/model/user.dart';
 import 'package:flutter_chat/provider/index.dart';
 import 'package:mobsms/mobsms.dart';
 
-import '../../generated/i18n.dart';
-
 import '../../commons/index.dart';
-
+import '../../generated/i18n.dart';
 import '../home.dart';
 import 'forget_password.dart';
 import 'freeze_account.dart';
@@ -99,7 +97,7 @@ class _PhoneLoginNextPageState extends State<PhoneLoginNextPage> {
                             inputFormatters: pwsLogin
                                 ? []
                                 : <TextInputFormatter>[
-                                    WhitelistingTextInputFormatter.digitsOnly,
+                                    FilteringTextInputFormatter.digitsOnly,
                                     LengthLimitingTextInputFormatter(6)
                                   ])),
                     Visibility(

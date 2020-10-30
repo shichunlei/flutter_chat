@@ -77,32 +77,32 @@ IOS
 ## 我的Flutter运行环境
 
 ```
-[✓] Flutter (Channel beta, v1.17.0, on Mac OS X 10.14.6 18G103, locale zh-Hans-CN)
-    • Flutter version 1.17.0 at /Users/14cells/Android/flutter
-    • Framework revision e6b34c2b5c (2 weeks ago), 2020-05-02 11:39:18 -0700
-    • Engine revision 540786dd51
-    • Dart version 2.8.1
+Flutter (Channel stable, 1.22.1, on Mac OS X 10.15.4 19E287, locale zh-Hans-CN)
+    • Flutter version 1.22.1 at /System/Volumes/Data/workspace/flutter
+    • Framework revision f30b7f4db9 (3 周前), 2020-10-08 10:06:30 -0700
+    • Engine revision 75bef9f6c8
+    • Dart version 2.10.1
+    • Pub download mirror https://pub.flutter-io.cn
+    • Flutter download mirror https://storage.flutter-io.cn
 
-[✓] Android toolchain - develop for Android devices (Android SDK version 29.0.2)
-    • Android SDK at /Users/14cells/Android/SDK
-    • Platform android-R, build-tools 29.0.2
+
+[✓] Android toolchain - develop for Android devices (Android SDK version 30.0.2)
+    • Android SDK at /Users/developer/Library/Android/sdk
+    • Platform android-30, build-tools 30.0.2
     • Java binary at: /Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/java
-    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b49-5587405)
+    • Java version OpenJDK Runtime Environment (build 1.8.0_212-release-1586-b4-5784211)
     • All Android licenses accepted.
 
-[✓] Xcode - develop for iOS and macOS (Xcode 11.2.1)
+[✓] Xcode - develop for iOS and macOS (Xcode 11.7)
     • Xcode at /Applications/Xcode.app/Contents/Developer
-    • Xcode 11.2.1, Build version 11B500
-    • CocoaPods version 1.8.4
+    • Xcode 11.7, Build version 11E801a
+    • CocoaPods version 1.9.1
 
-[✓] Chrome - develop for the web
-    • Chrome at /Applications/Google Chrome.app/Contents/MacOS/Google Chrome
-
-[✓] Android Studio (version 3.5)
+[✓] Android Studio (version 3.6)
     • Android Studio at /Applications/Android Studio.app/Contents
-    • Flutter plugin version 44.0.1
-    • Dart plugin version 191.8593
-    • Java version OpenJDK Runtime Environment (build 1.8.0_202-release-1483-b49-5587405)
+    • Flutter plugin version 49.0.1
+    • Dart plugin version 192.8052
+    • Java version OpenJDK Runtime Environment (build 1.8.0_212-release-1586-b4-5784211)
 
 [✓] Connected device (3 available)
     • MI 5X      • 1c7664100104 • android-arm64  • Android 8.1.0 (API 27)

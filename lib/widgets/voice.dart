@@ -1,11 +1,11 @@
 import 'dart:async';
 
-import '../utils/file_util.dart';
-import '../utils/utils.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_sound_lite/flutter_sound_recorder.dart';
 import 'package:uuid/uuid.dart';
+
+import '../utils/file_util.dart';
+import '../utils/utils.dart';
 
 class VoiceWidget extends StatefulWidget {
   final Function(String audioPath, double audioTimeLength) onBackResult;
@@ -44,6 +44,9 @@ class _VoiceWidgetState extends State<VoiceWidget> {
 
   String recorderResult = '';
 
+  StreamSubscription recorderStateSubscription;
+  StreamSubscription recorderDbPeakSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -52,8 +55,7 @@ class _VoiceWidgetState extends State<VoiceWidget> {
   }
 
   void _init() async {
-    recorder = FlutterSoundRecorder()
-      ..initialize();
+    recorder = FlutterSoundRecorder()..initialize();
 
     String tempDir = await FileUtil.getInstance().getTempPath();
 
@@ -71,7 +73,7 @@ class _VoiceWidgetState extends State<VoiceWidget> {
 
       debugPrint('startRecorder result => $recorderResult');
 
-      recorder.onRecorderStateChanged.listen((e) {
+      recorderStateSubscription = recorder.onRecorderStateChanged.listen((e) {
         if (null != e) {
           this.setState(() {
             currentPosition = e.currentPosition;
@@ -87,7 +89,8 @@ class _VoiceWidgetState extends State<VoiceWidget> {
       });
 
       /// 录制过程监听录制的声音的大小 方便做语音动画显示图片的样式
-      recorder.onRecorderDbPeakChanged.listen((double value) {
+      recorderDbPeakSubscription =
+          recorder.onRecorderDbPeakChanged.listen((double value) {
         debugPrint("onRecorderDbPeakChanged update -> $value");
         if (value == null) value = 0.0;
 
@@ -127,6 +130,15 @@ class _VoiceWidgetState extends State<VoiceWidget> {
     try {
       String result = await recorder.stopRecorder();
       debugPrint('stopRecorder result => $result');
+
+      if (recorderStateSubscription != null) {
+        recorderStateSubscription.cancel();
+        recorderStateSubscription = null;
+      }
+      if (recorderDbPeakSubscription != null) {
+        recorderDbPeakSubscription.cancel();
+        recorderDbPeakSubscription = null;
+      }
 
       setState(() {
         durationTxt = '0:00:00';
@@ -246,6 +258,14 @@ class _VoiceWidgetState extends State<VoiceWidget> {
   @override
   void dispose() {
     recorder?.release();
+    if (recorderStateSubscription != null) {
+      recorderStateSubscription.cancel();
+      recorderStateSubscription = null;
+    }
+    if (recorderDbPeakSubscription != null) {
+      recorderDbPeakSubscription.cancel();
+      recorderDbPeakSubscription = null;
+    }
     super.dispose();
   }
 }
